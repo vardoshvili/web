@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenStreetMap Half Page</title>
+    <style>
+
+/* ------------------------------------------------------------------------------------------------------*/
+        body {
+            margin: 0;
+            display: flex;
+            height: 67vh;
+            padding-top: 100px;
+        }
+
+        #map {
+            flex: 1;
+            height: 100%;
+        }
+
+        #empty-section {
+            flex: 0; /* Horisontal cut of the map: 1 = half, 2 = quarter */
+            background-color: #f0f0f0; /* Light gray background for the empty section */
+        }
+/* ------------------------------------------------------------------------------------------------------*/
+
+/* ------------------------------------------------------------------------------------------------------*/
+        .container {
+            position: fixed;
+            bottom: 25px;
+            width: 100%;
+            height: 150px;
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none; /* For Firefox */
+        }
+
+        .container::-webkit-scrollbar {
+            display: none; /* For Chrome, Safari, and Edge */
+        }
+
+        .rectangle {
+            flex: 0 0 300px; /* Increased width for rectangles */
+            height: 100%;
+            margin-right: 10px;
+            background-color: #ddd;
+            transition: background-color 0.3s;
+        }
+
+        .rectangle:hover {
+            background-color: grey;
+        }
+
+        .buttons {
+            position: fixed;
+            bottom: 180px; /* Slightly on top of the rectangles */
+            right: 20px; /* All the way to the right of the screen */
+            display: flex;
+            gap: 5px; /* Small gap between the buttons */
+        }
+
+        .button {
+            width: 25px;
+            height: 25px;
+            background-color: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            user-select: none;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #aaa;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 30px;
+            right: 10px;
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .home-button:hover {
+            background-color: #0056b3;
+        }
+/* ------------------------------------------------------------------------------------------------------*/
+
+
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <div>
+        <button class="home-button" onclick="showPage('home')">Home</button>
+    </div>
+    <div id="map"></div>
+    <div id="empty-section"></div>
+    <div class="container">
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+        <div class="rectangle"></div>
+    </div>
+
+    <div class="buttons">
+        <div class="button" id="left-button">&#8592;</div>
+        <div class="button" id="right-button">&#8594;</div>
+    </div>
+
+    <script>
+
+/* ------------------------------------------------------------------------------------------------------*/
+        // Initialize the OpenStreetMap map
+        const map = L.map('map').setView([37.7749, -122.4194], 13); // San Francisco coordinates
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+/* ------------------------------------------------------------------------------------------------------*/
+
+/* ------------------------------------------------------------------------------------------------------*/
+        const container = document.querySelector('.container');
+        const leftButton = document.getElementById('left-button');
+        const rightButton = document.getElementById('right-button');
+
+        leftButton.addEventListener('click', () => {
+            container.scrollBy({ left: -310, behavior: 'smooth' });
+        });
+
+        rightButton.addEventListener('click', () => {
+            container.scrollBy({ left: 310, behavior: 'smooth' });
+        });
+/* ------------------------------------------------------------------------------------------------------*/
+        function showPage(page) {
+            if (page === 'home') {
+               window.location.href = 'index.html'; 
+         }
+        }
+
+
+    </script>
+</body>
+</html>
